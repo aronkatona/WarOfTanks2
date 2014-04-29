@@ -80,5 +80,10 @@ public class ClientPanel extends JPanel{
 		System.out.println(tmp);
 		return tmp;
 	}
+	
+	//ez nem kell...
+	public boolean isValidString(int x, int y){
+		return true;
+	}
 
 }
