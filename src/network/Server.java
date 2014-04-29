@@ -58,6 +58,7 @@ public class Server {
     	private PrintWriter out;
     	private String name;
     	private Player opponent;
+    	private int State;
     	
     	private Field[][] table;
     	private int N;
@@ -73,10 +74,8 @@ public class Server {
     				//TODO: tankbrerakás
     			}
     		}
-    		table[3][3].setTank(new ScoutTank());
     	}
-    	
-    	
+    	 	
     	public void setOpponent(Player opponent){
     		this.opponent = opponent;
     	}
@@ -125,6 +124,10 @@ public class Server {
                 	 tmp++;
                  }
                  out.println("SETSTATE" + 1);
+                 this.State = 1;
+                 while(opponent.State == 0){
+                	 System.out.println("waiting with oS: "+opponent.State);
+                 }
                  
                  
                  while (true) {

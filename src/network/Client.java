@@ -28,8 +28,6 @@ public class Client {
     
     String name;
     
-    String test1;
-    String test;
     
     public Client() {
 
