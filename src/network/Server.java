@@ -63,6 +63,9 @@ public class Server {
     	private Field[][] table;
     	private int N;
     	
+    	private String anyad;
+
+    	
     	public Player(Socket socket,int id){
     		this.socket = socket;
     		this.id = id;
