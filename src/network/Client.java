@@ -24,6 +24,7 @@ public class Client {
     Integer[][] table ;
     Integer N;
     
+    String name;
 
     public Client() {
 
