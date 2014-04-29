@@ -21,13 +21,13 @@ public class Client {
     PrintWriter out;
     ClientGui gui ;
     
-    
+    int State = 0;//tanklerakós state 0 , 1 amikor nincs lerakas
     
     Integer[][] table ;
     Integer N;
     
     String name;
-
+    
     public Client() {
 
         gui = new ClientGui(); 
@@ -44,13 +44,26 @@ public class Client {
 				
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-						System.out.println(btn.getText());
-						out.println("FIRE" + btn.getText());
-					
+						
+						if(getState() == 0){
+							out.println("PLACETANK" + btn.getText());
+							
+						}else if(getState() == 1){
+							out.println("FIRE" + btn.getText());
+						}
 				}
 			});
         }
     }
+    
+    public int getState(){
+    	return State;
+    }
+    
+    public void setState(int s){
+    	this.State = s;
+    }
+    
     
     public void sendMsg(){
     	
@@ -82,6 +95,12 @@ public class Client {
             	Integer j = Integer.parseInt(line.substring(5,6));
             	Integer value = Integer.parseInt(line.substring(6,7));
             	table[i][j] = value;
+            } else if(line.startsWith("SETTANKS")){
+            	int N = Integer.parseInt(line.substring(8));
+            	gui.NotifySetTanks(N);      	
+            } else if(line.startsWith("SETSTATE")){
+            	int s = Integer.parseInt(line.substring(8));
+            	setState(s);    	
             } else if(line.startsWith("TABLEDONE")){
             	 for(int i = 0; i < N; ++i){
                  	for(int j = 0; j < N; ++j){

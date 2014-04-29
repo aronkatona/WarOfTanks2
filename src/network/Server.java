@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
+import java.util.Random;
 
 import logic.Field;
 import logic.ScoutTank;
@@ -75,6 +76,7 @@ public class Server {
     		table[3][3].setTank(new ScoutTank());
     	}
     	
+    	
     	public void setOpponent(Player opponent){
     		this.opponent = opponent;
     	}
@@ -106,6 +108,23 @@ public class Server {
                  out.println("INIT" + N);
 
                  sendTable();
+                 
+                 
+                 /**
+                  * SETTTANKS
+                  */
+                 out.println("SETTANKS"+ N/2);
+                 int tmp = 0;
+                 while(tmp < N/2){
+                	 
+                	 String input = in.readLine();
+                	 Integer i = Integer.parseInt(input.substring(10,11));
+                	 Integer j = Integer.parseInt(input.substring(12,13));
+                	 table[i][j].setTank(new ScoutTank());
+                	 sendTable();
+                	 tmp++;
+                 }
+                 out.println("SETSTATE" + 1);
                  
                  
                  while (true) {

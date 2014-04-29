@@ -68,6 +68,10 @@ public class ClientGui extends JFrame{
         
 	}
 	
+	void NotifySetTanks(int n){
+		JOptionPane.showMessageDialog(this, "Rakdj be " + n + " tankot!");
+	}
+	
 	public String getName() {
         return JOptionPane.showInputDialog(
         		this,
