@@ -83,7 +83,7 @@ public class ClientPanel extends JPanel{
 	
 	//ez nem kell...
 	public boolean isValidString(int x, int y){
-		return true;
+		return 5 < 6;
 	}
 
 }
