@@ -59,6 +59,7 @@ public class Server {
     	private String name;
     	private Player opponent;
     	private int State;
+    	private int numberOfTanks;
     	
     	private Field[][] table;
     	private int N;
@@ -75,6 +76,7 @@ public class Server {
     				//TODO: tankbrerakás
     			}
     		}
+    		numberOfTanks = N/2;
     	}
     	 	
     	public void setOpponent(Player opponent){
@@ -127,11 +129,24 @@ public class Server {
                  out.println("SETSTATE" + 1);
                  this.State = 1;
                  while(opponent.State == 0){
-                	 System.out.println("waiting with oS: "+opponent.State);
+                	 System.out.println("");
                  }
                  
                  
                  while (true) {
+                	 
+                	 if(numberOfTanks == 0){
+                		 out.println("LOST");
+                		 opponent.out.println("WON");
+                		 break;
+                	 }
+                	 if(opponent.numberOfTanks == 0){
+                		 out.println("WON");
+                		 opponent.out.println("LOST");
+                		 break;
+                	 }
+                	 
+                	 
                      String input = in.readLine();
                      if (input == null) {
                          return;
@@ -144,6 +159,7 @@ public class Server {
 	                     Integer j = Integer.parseInt(input.substring(7,8));
 	                     if(opponent.table[i][j].getTank() != null){
 	                    	 opponent.table[i][j].setTank(null);
+	                    	 opponent.numberOfTanks--;
 	                     }else{
 	                    	 opponent.table[i][j].setTank(null);
 	                    	 opponent.table[i][j].setIsDestroyed(true);

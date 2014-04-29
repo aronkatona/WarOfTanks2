@@ -15,26 +15,26 @@ import javax.swing.JTextField;
 
 
 public class ClientGui extends JFrame{
-	
+
 	private JPanel panel1;
 	private JPanel panel2;
-	
+
 	public List<JButton> buttons;
-	
+
 	public JTextField textField;
-	
+
 	public JTextArea messageArea;
-	
+
 	public ClientGui(){
 		setTitle("UberGame");
 		setSize(400, 800);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
-		
+
 		panel1 = new JPanel();
 		panel1.setSize(400, 400);
 		panel1.setLayout(new GridLayout(10,10));
-		
+
 		buttons = new ArrayList<>();
 		for(int i = 0; i < 10; ++i){
 			for(int j = 0; j < 10; ++j){
@@ -44,15 +44,15 @@ public class ClientGui extends JFrame{
 				panel1.add(btn);
 			}
 		}
-		
+
 		add(panel1,BorderLayout.PAGE_START);
-		
+
 		panel2 = new JPanel();
 		panel2.setSize(400,400);
-		
+
 		textField = new JTextField(40);
 	    messageArea = new JTextArea(8, 40);
-	    
+
 	    textField.setEditable(false);
         messageArea.setEditable(false);
         panel2.setLayout(new BorderLayout());
@@ -67,11 +67,15 @@ public class ClientGui extends JFrame{
           
         
 	}
-	
+
 	void NotifySetTanks(int n){
 		JOptionPane.showMessageDialog(this, "Rakdj be " + n + " tankot!");
 	}
 	
+	void NotifyGameOver(String msg){
+		JOptionPane.showMessageDialog(this, msg);
+	}
+
 	public String getName() {
         return JOptionPane.showInputDialog(
         		this,
@@ -81,4 +85,3 @@ public class ClientGui extends JFrame{
     }
 
 }
-

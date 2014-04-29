@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 
 
 public class Client {
-	
+
 	private static final int PORT = 9006;
 
     BufferedReader in;
@@ -43,13 +43,13 @@ public class Client {
 
         for(final JButton btn: gui.buttons){
         	btn.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-						
+
 						if(getState() == 0){
 							out.println("PLACETANK" + btn.getText());
-							
+
 						}else if(getState() == 1){
 							out.println("FIRE" + btn.getText());
 						}
@@ -107,46 +107,41 @@ public class Client {
             	 for(int i = 0; i < N; ++i){
                  	for(int j = 0; j < N; ++j){
                  		if(table[i][j] == 0){
-                 			String tmp = " " + Integer.toString(i) + "," + Integer.toString(j); 
-                 			for(JButton btn: gui.buttons){
-                 				if(btn.getText().equals(tmp)){
-                 					btn.setBackground(Color.BLUE);
-                 					break;
-                 				} 
-                 			}
+                 			setBtnColor(i,j,Color.BLUE);
                  		} 
                  		if(table[i][j] == 1){
-                 			String tmp = " " + Integer.toString(i) + "," + Integer.toString(j); 
-                 			for(JButton btn: gui.buttons){
-                 				if(btn.getText().equals(tmp)){
-                 					btn.setBackground(Color.WHITE);
-                 					break;
-                 				} 
-                 			}
+                 			setBtnColor(i,j,Color.WHITE);
                  		}
                  		if(table[i][j] == 2){
-                 			String tmp = " " + Integer.toString(i) + "," + Integer.toString(j); 
-                 			for(JButton btn: gui.buttons){
-                 				if(btn.getText().equals(tmp)){
-                 					btn.setBackground(Color.RED);
-                 					break;
-                 				} 
-                 			}
+                 			setBtnColor(i,j,Color.RED);
                  		} 
                  	}
                  }
-            	/*
-            	for(int i = 0; i < N; ++i){
-            		for(int j = 0; j < N; ++j){
-            			gui.messageArea.append(table[i][j] + " ");
-            		}
-            		gui.messageArea.append("\n");
-            	}*/
             } else if (line.startsWith("MESSAGE")) {
                 gui.messageArea.append(line.substring(8) + "\n");
-            } 
+            } else if(line.startsWith("WON")){
+            	gui.NotifyGameOver("Nyertél!");
+            	//TODO: fix this shit
+            	gui.setVisible(false); 
+            	gui.dispose(); 
+            } else if(line.startsWith("LOST")){
+            	gui.NotifyGameOver("Vesztettél!");
+            	//TODO:
+            	gui.setVisible(false); 
+            	gui.dispose(); 
+            }
         }
         
+    }
+    
+    public void setBtnColor(int i,int j, Color color){
+    	String tmp = " " + Integer.toString(i) + "," + Integer.toString(j); 
+			for(JButton btn: gui.buttons){
+				if(btn.getText().equals(tmp)){
+					btn.setBackground(color);
+					break;
+				} 
+			}
     }
 
 
