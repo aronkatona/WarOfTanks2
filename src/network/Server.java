@@ -8,6 +8,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
 
+import logic.Field;
+import logic.ScoutTank;
+
 
 public class Server {
 
@@ -25,7 +28,7 @@ public class Server {
     	currentPlayer = c;
     }
     
-    private static HashSet<String> names = new HashSet<String>();
+    private static HashSet<String> players = new HashSet<String>();
     
     private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
 
@@ -55,19 +58,21 @@ public class Server {
     	private String name;
     	private Player opponent;
     	
-    	private Integer[][] table;
+    	private Field[][] table;
     	private int N;
     	
     	public Player(Socket socket,int id){
     		this.socket = socket;
     		this.id = id;
     		N = 10;
-    		table = new Integer[N][N];
+    		table = new Field[N][N];
     		for(int i = 0; i < N; ++i){
     			for(int j = 0; j < N;++j){
-    				table[i][j] = 0;
+    				table[i][j] = new Field(i, j);
+    				//TODO: tankbrerakás
     			}
     		}
+    		table[3][3].setTank(new ScoutTank());
     	}
     	
     	public void setOpponent(Player opponent){
@@ -85,9 +90,9 @@ public class Server {
                      if (name == null) {
                          return;
                      }
-                     synchronized (names) {
-                         if (!names.contains(name)) {
-                             names.add(name);
+                     synchronized (players) {
+                         if (!players.contains(name)) {
+                             players.add(name);
                              break;
                          }
                      }
@@ -114,7 +119,12 @@ public class Server {
                      } else if(input.startsWith("FIRE") && Server.currentPlayer == id){
                     	 Integer i = Integer.parseInt(input.substring(5,6));
 	                     Integer j = Integer.parseInt(input.substring(7,8));
-	                     opponent.table[i][j] = 1;
+	                     if(opponent.table[i][j].getTank() != null){
+	                    	 opponent.table[i][j].setTank(null);
+	                     }else{
+	                    	 opponent.table[i][j].setTank(null);
+	                    	 opponent.table[i][j].setIsDestroyed(true);
+	                     }
 	                     Server.currentPlayer =  opponent.id;
 	                     opponent.sendTable();
 	                     sendTable();
@@ -127,7 +137,7 @@ public class Server {
              } finally {
           
                  if (name != null) {
-                     names.remove(name);
+                     players.remove(name);
                  }
                  if (out != null) {
                      writers.remove(out);
@@ -143,7 +153,18 @@ public class Server {
     	 public void sendTable(){
     		 for(int i = 0; i < N; ++i){
             	 for(int j = 0; j < N; ++j){
-            		 out.println("FILL" + i + j + table[i][j]);
+            		 /**
+            		  * 0 tank
+            		  * 1 nem tank
+            		  * 2 megsemmisítve
+            		  */
+            		 if(table[i][j].getTank() != null){
+            			 out.println("FILL" + i + j + 0);
+            		 }else if(table[i][j].getIsDestroyed()){
+        				 out.println("FILL" + i + j + 2);
+        			 }else{
+        				 out.println("FILL" + i + j + 1);
+            		 }
             	 }
              }
             

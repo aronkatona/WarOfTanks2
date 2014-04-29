@@ -21,6 +21,8 @@ public class Client {
     PrintWriter out;
     ClientGui gui ;
     
+    
+    
     Integer[][] table ;
     Integer N;
     
@@ -87,12 +89,21 @@ public class Client {
                  			String tmp = " " + Integer.toString(i) + "," + Integer.toString(j); 
                  			for(JButton btn: gui.buttons){
                  				if(btn.getText().equals(tmp)){
-                 					btn.setBackground(Color.WHITE);
+                 					btn.setBackground(Color.BLUE);
                  					break;
                  				} 
                  			}
                  		} 
                  		if(table[i][j] == 1){
+                 			String tmp = " " + Integer.toString(i) + "," + Integer.toString(j); 
+                 			for(JButton btn: gui.buttons){
+                 				if(btn.getText().equals(tmp)){
+                 					btn.setBackground(Color.WHITE);
+                 					break;
+                 				} 
+                 			}
+                 		}
+                 		if(table[i][j] == 2){
                  			String tmp = " " + Integer.toString(i) + "," + Integer.toString(j); 
                  			for(JButton btn: gui.buttons){
                  				if(btn.getText().equals(tmp)){
