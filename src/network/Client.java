@@ -121,13 +121,11 @@ public class Client {
                 gui.messageArea.append(line.substring(8) + "\n");
             } else if(line.startsWith("WON")){
             	gui.NotifyGameOver("Nyertél!");
-            	//TODO: fix this shit
             	gui.setVisible(false); 
             	gui.dispose(); 
             	System.exit(1);
             } else if(line.startsWith("LOST")){
             	gui.NotifyGameOver("Vesztettél!");
-            	//TODO:
             	gui.setVisible(false); 
             	gui.dispose(); 
             	System.exit(1);
