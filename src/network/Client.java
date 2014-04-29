@@ -28,6 +28,8 @@ public class Client {
     
     String name;
     
+    String test1;
+    
     public Client() {
 
         gui = new ClientGui(); 
