@@ -27,8 +27,7 @@ public class Client {
     Integer N;
     
     String name;
-    
-    String str;
+
     
     
     public Client() {
