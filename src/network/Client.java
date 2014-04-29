@@ -21,8 +21,6 @@ public class Client {
     PrintWriter out;
     ClientGui gui ;
     
-    String test;
-    
     int State = 0;//tanklerakós state 0 , 1 amikor nincs lerakas
     
     Integer[][] table ;
