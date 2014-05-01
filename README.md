@@ -1,9 +1,9 @@
 WarOfTanks2
 ===========
 ###Projekt eszkozok beadando feladat
-###hatarido:
+###hatarido
 majus 16
-###feladat: 
+###feladat
 lan-ban játszható "torpedó" játék
-###csinálta:
+###csinálta
 master, master, master
