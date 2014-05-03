@@ -27,11 +27,10 @@ public class Client {
     Integer N;
     
     String name;
-
     
     
     public Client() {
-
+    	
         gui = new ClientGui(); 
 
         gui.textField.addActionListener(new ActionListener() {
@@ -66,11 +65,6 @@ public class Client {
     	this.State = s;
     }
     
-    
-    public void sendMsg(){
-    	
-    }
-
 
     private void run() throws IOException {
 
@@ -143,8 +137,10 @@ public class Client {
 				} 
 			}
     }
+    
 
 
+    
     public static void main(String[] args) throws Exception {
         Client client = new Client();
         client.gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

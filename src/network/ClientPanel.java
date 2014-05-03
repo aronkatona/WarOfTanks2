@@ -46,13 +46,13 @@ public class ClientPanel extends JPanel{
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(Color.BLACK);
 		
-		for(int i = 0; i < 300; i+= 30){
+		for(int i = 50; i < 350; i+= 30){
 			for(int j = 0; j < 300; j+=30 ){
 				g2d.drawRect(i, j, 30, 30);
 			}
 		}
 		
-		for(int i = 400; i < 700; i+= 30){
+		for(int i = 450; i < 750; i+= 30){
 			for(int j = 0; j < 300; j+=30 ){
 				
 				g2d.drawImage(grass, i, j, this);

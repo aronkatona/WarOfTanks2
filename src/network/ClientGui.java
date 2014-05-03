@@ -27,12 +27,11 @@ public class ClientGui extends JFrame{
 
 	public ClientGui(){
 		setTitle("UberGame");
-		setSize(400, 800);
-		setLocationRelativeTo(null);
+		setSize(800, 600);
+
 		setLayout(new BorderLayout());
 
 		panel1 = new JPanel();
-		panel1.setSize(400, 400);
 		panel1.setLayout(new GridLayout(10,10));
 
 		buttons = new ArrayList<>();
@@ -48,13 +47,13 @@ public class ClientGui extends JFrame{
 		add(panel1,BorderLayout.PAGE_START);
 
 		panel2 = new JPanel();
-		panel2.setSize(400,400);
 
 		textField = new JTextField(40);
+		textField.setEditable(false);
 	    messageArea = new JTextArea(8, 40);
+	    messageArea.setEditable(false);
 
-	    textField.setEditable(false);
-        messageArea.setEditable(false);
+
         panel2.setLayout(new BorderLayout());
         panel2.add(textField,BorderLayout.PAGE_START);
         panel2.add(messageArea,BorderLayout.PAGE_END);
@@ -63,7 +62,7 @@ public class ClientGui extends JFrame{
        
         add(new JScrollPane(messageArea));
         setLocationRelativeTo(null);
-        pack();
+      //  pack();
           
         
 	}
