@@ -39,11 +39,11 @@ public class Client {
         });   
         N = 10;
         table = new Integer[N][N];
-        /*for(int i = 0 ; i < 10; ++i){
+        for(int i = 0 ; i < 10; ++i){
         	for(int j = 0; j < 10; ++j){
-        		table[i][j] = 0;
+        		table[i][j] = 1;
         	}
-        }*/
+        }
     }
     
     public int getState(){
@@ -115,5 +115,6 @@ public class Client {
         client.gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         client.gui.setVisible(true);
         client.run();
+        
     }
 }
