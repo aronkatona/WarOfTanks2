@@ -1,14 +1,11 @@
 package network;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -16,53 +13,55 @@ import javax.swing.JTextField;
 
 public class ClientGui extends JFrame{
 
-	private JPanel panel1;
-	private JPanel panel2;
 
-	public List<JButton> buttons;
+	private ClientPanel tablePanel;
 
 	public JTextField textField;
-
 	public JTextArea messageArea;
 
 	public ClientGui(){
 		setTitle("UberGame");
-		setSize(800, 600);
+		setSize(800, 700);
+		
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
 
-		setLayout(new BorderLayout());
+		tablePanel = new ClientPanel();
+		c.ipady = 400;
+		c.weightx = 0.1;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		add(tablePanel, c);
+		
+		
+		messageArea = new JTextArea(8, 40);
+		//add(new JScrollPane(messageArea));
+	    messageArea.setEditable(false);
+	    c.ipady = 150;
+	    c.weightx = 0.1;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		add(messageArea, c);
 
-		panel1 = new JPanel();
-		panel1.setLayout(new GridLayout(10,10));
-
-		buttons = new ArrayList<>();
-		for(int i = 0; i < 10; ++i){
-			for(int j = 0; j < 10; ++j){
-				JButton btn = new JButton();
-				btn.setText(" " + Integer.toString(i) + ","+ Integer.toString(j));
-				buttons.add(btn);
-				panel1.add(btn);
-			}
-		}
-
-		add(panel1,BorderLayout.PAGE_START);
-
-		panel2 = new JPanel();
 
 		textField = new JTextField(40);
 		textField.setEditable(false);
-	    messageArea = new JTextArea(8, 40);
-	    messageArea.setEditable(false);
-
-
-        panel2.setLayout(new BorderLayout());
-        panel2.add(textField,BorderLayout.PAGE_START);
-        panel2.add(messageArea,BorderLayout.PAGE_END);
+		c.ipady = 40;
+		c.weightx = 0.1;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		add(textField, c);
        
-        add(panel2,BorderLayout.PAGE_END);
+
        
-        add(new JScrollPane(messageArea));
+        
         setLocationRelativeTo(null);
-      //  pack();
+
           
         
 	}

@@ -117,7 +117,7 @@ public class Server {
                   */
                  out.println("SETTANKS"+ N/2);
                  int tmp = 0;
-                 while(tmp < N/2){
+                /* while(tmp < N/2){
                 	 
                 	 String input = in.readLine();
                 	 Integer i = Integer.parseInt(input.substring(10,11));
@@ -130,7 +130,7 @@ public class Server {
                  this.State = 1;
                  while(opponent.State == 0){
                 	 System.out.println("");
-                 }
+                 }*/
                  
                  
                  while (true) {

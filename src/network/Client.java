@@ -1,6 +1,9 @@
 package network;
 
-import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -38,23 +41,7 @@ public class Client {
                 out.println("CHAT" + gui.textField.getText());
                 gui.textField.setText("");
             }
-        });
-
-        for(final JButton btn: gui.buttons){
-        	btn.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-
-						if(getState() == 0){
-							out.println("PLACETANK" + btn.getText());
-
-						}else if(getState() == 1){
-							out.println("FIRE" + btn.getText());
-						}
-				}
-			});
-        }
+        });   
     }
     
     public int getState(){
@@ -98,7 +85,7 @@ public class Client {
             	int s = Integer.parseInt(line.substring(8));
             	setState(s);    	
             } else if(line.equals("TABLEDONE")){
-            	 for(int i = 0; i < N; ++i){
+            	/* for(int i = 0; i < N; ++i){
                  	for(int j = 0; j < N; ++j){
                  		if(table[i][j] == 0){
                  			setBtnColor(i,j,Color.BLUE);
@@ -110,7 +97,7 @@ public class Client {
                  			setBtnColor(i,j,Color.RED);
                  		} 
                  	}
-                 }
+                 }*/
             } else if (line.startsWith("MESSAGE")) {
                 gui.messageArea.append(line.substring(8) + "\n");
             } else if(line.equals("WON")){
@@ -128,18 +115,10 @@ public class Client {
         
     }
     
-    public void setBtnColor(int i,int j, Color color){
-    	String tmp = " " + Integer.toString(i) + "," + Integer.toString(j); 
-			for(JButton btn: gui.buttons){
-				if(btn.getText().equals(tmp)){
-					btn.setBackground(color);
-					break;
-				} 
-			}
-    }
+
     
 
-
+    
     
     public static void main(String[] args) throws Exception {
         Client client = new Client();
