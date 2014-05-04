@@ -70,7 +70,7 @@ public class ClientGui extends JFrame{
 	void NotifySetTanks(int n){
 		JOptionPane.showMessageDialog(this, "Rakdj be " + n + " tankot!");
 	}
-	
+
 	void NotifyGameOver(String msg){
 		JOptionPane.showMessageDialog(this, msg);
 	}

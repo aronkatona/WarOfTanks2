@@ -78,9 +78,9 @@ public class Client {
             String line = in.readLine();
              if(line.startsWith("SENDID")){
             	 gui.setTitle("Client 0" + line.substring(6) );
-            } else if (line.startsWith("SUBMITNAME")) {
+            } else if (line.equals("SUBMITNAME")) {
                 out.println(gui.getName());
-            } else if (line.startsWith("NAMEACCEPTED")) {
+            } else if (line.equals("NAMEACCEPTED")) {
                 gui.textField.setEditable(true);
             } else if (line.startsWith("INIT")){
             	String tmp = line.substring(4, 6);
@@ -97,7 +97,7 @@ public class Client {
             } else if(line.startsWith("SETSTATE")){
             	int s = Integer.parseInt(line.substring(8));
             	setState(s);    	
-            } else if(line.startsWith("TABLEDONE")){
+            } else if(line.equals("TABLEDONE")){
             	 for(int i = 0; i < N; ++i){
                  	for(int j = 0; j < N; ++j){
                  		if(table[i][j] == 0){
@@ -113,12 +113,12 @@ public class Client {
                  }
             } else if (line.startsWith("MESSAGE")) {
                 gui.messageArea.append(line.substring(8) + "\n");
-            } else if(line.startsWith("WON")){
+            } else if(line.equals("WON")){
             	gui.NotifyGameOver("Nyertél!");
             	gui.setVisible(false); 
             	gui.dispose(); 
             	System.exit(1);
-            } else if(line.startsWith("LOST")){
+            } else if(line.equals("LOST")){
             	gui.NotifyGameOver("Vesztettél!");
             	gui.setVisible(false); 
             	gui.dispose(); 
