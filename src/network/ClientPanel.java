@@ -47,15 +47,32 @@ public class ClientPanel extends JPanel{
 		g2d.setColor(Color.BLACK);
 
 		for(int i = 50; i < 350; i+= 30){
-			for(int j = 0; j < 300; j+=30 ){
+			for(int j = 10; j < 310; j+=30 ){
+				System.out.println(((i-50)/30) + "," + (j-10)/30);
+				if( Client.table[((i-50)/30)][(j-10)/30] == 0){
+					g2d.drawImage(tank, i, j, this);
+				}
+				if( Client.table[(i-50)/30][(j-10)/30] == 1){
+					g2d.drawImage(grass, i, j, this);
+				}
+				if( Client.table[(i-50)/30][(j-10)/30] == 2){
+					g2d.drawImage(destroyed, i, j, this);
+				}
 				g2d.drawRect(i, j, 30, 30);
 			}
 		}
 
 		for(int i = 450; i < 750; i+= 30){
-			for(int j = 0; j < 300; j+=30 ){
-
-				g2d.drawImage(grass, i, j, this);
+			for(int j = 10; j < 310; j+=30 ){
+				if( Client.table[(i-50)/30][(j-10)/30] == 0){
+					g2d.drawImage(tank, i, j, this);
+				}
+				if( Client.table[(i-50)/30][(j-10)/30] == 1){
+					g2d.drawImage(grass, i, j, this);
+				}
+				if( Client.table[(i-50)/30][(j-10)/30] == 2){
+					g2d.drawImage(destroyed, i, j, this);
+				}
 				g2d.drawRect(i, j, 30, 30);
 			}
 		}

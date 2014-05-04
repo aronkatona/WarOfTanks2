@@ -76,6 +76,8 @@ public class Server {
     				//TODO: tankbrerakás
     			}
     		}
+    		table[0][0].setTank(new ScoutTank());
+    		table[9][9].setIsDestroyed(true);
     		numberOfTanks = N/2;
     	}
     	 	

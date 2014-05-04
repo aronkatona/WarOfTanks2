@@ -1,9 +1,5 @@
 package network;
 
-import java.awt.ComponentOrientation;
-import java.awt.Container;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -12,7 +8,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
 
@@ -26,7 +21,7 @@ public class Client {
     
     int State = 0;//tanklerakós state 0 , 1 amikor nincs lerakas
     
-    Integer[][] table ;
+    static Integer[][] table ;
     Integer N;
     
     String name;
@@ -42,6 +37,13 @@ public class Client {
                 gui.textField.setText("");
             }
         });   
+        N = 10;
+        table = new Integer[N][N];
+        /*for(int i = 0 ; i < 10; ++i){
+        	for(int j = 0; j < 10; ++j){
+        		table[i][j] = 0;
+        	}
+        }*/
     }
     
     public int getState(){
@@ -85,19 +87,7 @@ public class Client {
             	int s = Integer.parseInt(line.substring(8));
             	setState(s);    	
             } else if(line.equals("TABLEDONE")){
-            	/* for(int i = 0; i < N; ++i){
-                 	for(int j = 0; j < N; ++j){
-                 		if(table[i][j] == 0){
-                 			setBtnColor(i,j,Color.BLUE);
-                 		} 
-                 		if(table[i][j] == 1){
-                 			setBtnColor(i,j,Color.WHITE);
-                 		}
-                 		if(table[i][j] == 2){
-                 			setBtnColor(i,j,Color.RED);
-                 		} 
-                 	}
-                 }*/
+            	 gui.repaint();
             } else if (line.startsWith("MESSAGE")) {
                 gui.messageArea.append(line.substring(8) + "\n");
             } else if(line.equals("WON")){
