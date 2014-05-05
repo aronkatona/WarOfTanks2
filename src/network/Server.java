@@ -76,8 +76,7 @@ public class Server {
     				//TODO: tankbrerakás
     			}
     		}
-    		table[0][0].setTank(new ScoutTank());
-    		table[9][9].setIsDestroyed(true);
+    		
     		numberOfTanks = N/2;
     	}
     	 	
@@ -119,7 +118,7 @@ public class Server {
                   */
                  out.println("SETTANKS"+ N/2);
                  int tmp = 0;
-                /* while(tmp < N/2){
+                 while(tmp < N/2){
                 	 
                 	 String input = in.readLine();
                 	 Integer i = Integer.parseInt(input.substring(10,11));
@@ -131,8 +130,8 @@ public class Server {
                  out.println("SETSTATE" + 1);
                  this.State = 1;
                  while(opponent.State == 0){
-                	 System.out.println("");
-                 }*/
+                	 //System.out.println("");
+                 }
                  
                  
                  while (true) {
@@ -162,9 +161,13 @@ public class Server {
 	                     if(opponent.table[i][j].getTank() != null){
 	                    	 opponent.table[i][j].setTank(null);
 	                    	 opponent.numberOfTanks--;
+	                    	 
+	                    	 out.println("SHOOT"+i+j+2);
 	                     }else{
 	                    	 opponent.table[i][j].setTank(null);
 	                    	 opponent.table[i][j].setIsDestroyed(true);
+	                    	 
+	                    	 out.println("SHOOT"+i+j+2);
 	                     }
 	                     Server.currentPlayer =  opponent.id;
 	                     opponent.sendTable();

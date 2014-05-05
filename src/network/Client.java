@@ -2,6 +2,8 @@ package network;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,9 +21,11 @@ public class Client {
     PrintWriter out;
     ClientGui gui ;
     
-    int State = 0;//tanklerakós state 0 , 1 amikor nincs lerakas
+    static int State = 0;//tanklerakós state 0 , 1 amikor nincs lerakas
     
     static Integer[][] table ;
+    static Integer[][] shootTable;
+    
     Integer N;
     
     String name;
@@ -44,6 +48,29 @@ public class Client {
         		table[i][j] = 1;
         	}
         }
+        
+        shootTable = new Integer[N][N];
+        for(int i = 0 ; i < 10; ++i){
+        	for(int j = 0; j < 10; ++j){
+        		shootTable[i][j] = 1;
+        	}
+        }
+        
+        gui.tablePanel.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mousePressed(MouseEvent e){
+				int ClickedX = e.getX();
+				int ClickedY = e.getY();
+				
+				if(getState() == 0){
+					out.println("PLACETANK"+gui.tablePanel.getIndex(ClickedX, ClickedY));
+				}
+				else if(getState() == 1){
+					out.println("FIRE"+gui.tablePanel.getIndex(ClickedX, ClickedY));
+				}
+			}
+		});
     }
     
     public int getState(){
@@ -86,6 +113,12 @@ public class Client {
             } else if(line.startsWith("SETSTATE")){
             	int s = Integer.parseInt(line.substring(8));
             	setState(s);    	
+            }else if(line.startsWith("SHOOT")){
+            	Integer i = Integer.parseInt(line.substring(5,6));
+            	Integer j = Integer.parseInt(line.substring(6,7));
+            	Integer value = Integer.parseInt(line.substring(7,8));
+            	shootTable[i][j] = value;
+            	
             } else if(line.equals("TABLEDONE")){
             	 gui.repaint();
             } else if (line.startsWith("MESSAGE")) {
@@ -105,16 +138,10 @@ public class Client {
         
     }
     
-
-    
-
-    
-    
     public static void main(String[] args) throws Exception {
         Client client = new Client();
         client.gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         client.gui.setVisible(true);
-        client.run();
-        
+        client.run();     
     }
 }

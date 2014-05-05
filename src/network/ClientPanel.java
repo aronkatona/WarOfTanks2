@@ -64,13 +64,13 @@ public class ClientPanel extends JPanel{
 
 		for(int i = 450; i < 750; i+= 30){
 			for(int j = 10; j < 310; j+=30 ){
-				if( Client.table[(i-450)/30][(j-10)/30] == 0){
+				if( Client.shootTable[(i-450)/30][(j-10)/30] == 0){
 					g2d.drawImage(tank, i, j, this);
 				}
-				if( Client.table[(i-450)/30][(j-10)/30] == 1){
+				if( Client.shootTable[(i-450)/30][(j-10)/30] == 1){
 					g2d.drawImage(grass, i, j, this);
 				}
-				if( Client.table[(i-450)/30][(j-10)/30] == 2){
+				if( Client.shootTable[(i-450)/30][(j-10)/30] == 2){
 					g2d.drawImage(destroyed, i, j, this);
 				}
 				g2d.drawRect(i, j, 30, 30);
@@ -83,15 +83,29 @@ public class ClientPanel extends JPanel{
     }
 
 	public String getIndex(int x, int y) {
-		String tmp = "";
-
-		if(y < 300){
-			tmp =  Integer.toString(y/30) + ",";
-		} else tmp = Integer.toString(y) + ",";
-
-		if(x < 300){
-			tmp = tmp + Integer.toString(x/30);
-		} else tmp = tmp + Integer.toString(x);
+		String tmp = " ";
+		if(Client.State == 0){
+			if(x >= 50 && x < 350){
+				//saját tábla
+				tmp = tmp + Integer.toString((x-50)/30) + ",";
+			} else tmp = tmp + Integer.toString(x-50) + ",";
+		
+			if(y >= 10 && y < 310){
+				tmp = tmp + Integer.toString((y-10)/30);
+			} else tmp = tmp + Integer.toString(y-10);
+		}
+		
+		if(Client.State == 1){
+			if(x >= 450 && x < 750){
+				//saját tábla
+				tmp = tmp + Integer.toString((x-450)/30) + ",";
+			} else tmp = tmp + Integer.toString(x-450) + ",";
+		
+			if(y >= 10 && y < 310){
+				tmp = tmp + Integer.toString((y-10)/30);
+			} else tmp = tmp + Integer.toString(y-10);
+		}
+		
 
 
 		System.out.println(tmp);

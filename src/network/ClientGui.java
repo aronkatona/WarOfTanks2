@@ -2,6 +2,8 @@ package network;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -36,7 +38,7 @@ public class ClientGui extends JFrame{
 		textField.setEditable(false);
 		textField.setPreferredSize(new Dimension(800,30));
 		add(textField,BorderLayout.PAGE_END);
-
+		
        
 
        
