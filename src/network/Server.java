@@ -129,8 +129,9 @@ public class Server {
                  }
                  out.println("SETSTATE" + 1);
                  this.State = 1;
-                 while(opponent.State == 0){
-                	 //System.out.println("");
+                 while(opponent.State != 1){
+                	 
+                	 System.out.println("");
                  }
                  
                  
