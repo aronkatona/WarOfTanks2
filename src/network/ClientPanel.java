@@ -83,31 +83,20 @@ public class ClientPanel extends JPanel{
 
 	public String getIndex(int x, int y) {
 		String tmp = " ";
-		System.out.println(Client.State);
 		if(Client.State == 0){
-			System.out.println("Player table");
 			if(x >= 50 && x < 350 && y >= 10 && y < 310){
 				//saját tábla
 				tmp = tmp + Integer.toString((x-50)/30) + "," + Integer.toString((y-10)/30);
-			}
-		
+			}	
 		} 
 		else if(Client.State == 1){
-			System.out.println("Shooting table");
 			if(x >= 450 && x < 750 && y >= 10 && y < 310){
 				//saját tábla
 				tmp = tmp + Integer.toString((x-450)/30) + "," + Integer.toString((y-10)/30);
-			}
-		
+			}		
 		}
-
-		System.out.println(tmp);
 		return tmp;
 	}
 
-	//ez nem kell...
-	public boolean isValidString(int x, int y){
-		return 5 < 6;
-	}
 
 }

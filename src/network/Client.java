@@ -23,7 +23,7 @@ public class Client {
     
     static int State = 0;//tanklerakós state 0 , 1 amikor nincs lerakas
     
-    static Integer[][] table ;
+    static Integer[][] table;
     static Integer[][] shootTable;
     
     Integer N;
@@ -63,15 +63,17 @@ public class Client {
 				int ClickedX = e.getX();
 				int ClickedY = e.getY();
 				
+				
 				if(getState() == 0){
-					if(!gui.tablePanel.getIndex(ClickedX, ClickedY).equals(" ")){
-						System.out.println("IM in mousepressed, State 0");
+					String tmp = gui.tablePanel.getIndex(ClickedX, ClickedY);
+					Integer i = Integer.parseInt(tmp.substring(1,2));
+					Integer j = Integer.parseInt(tmp.substring(3,4));
+					if(!gui.tablePanel.getIndex(ClickedX, ClickedY).equals(" ") && table[i][j] != 0){
 						out.println("PLACETANK"+gui.tablePanel.getIndex(ClickedX, ClickedY));
 					}
 				}
 				else if(getState() == 1){
 					if(!gui.tablePanel.getIndex(ClickedX, ClickedY).equals(" ")){
-						System.out.println("IM in mousepressed, State 1");
 						out.println("FIRE"+gui.tablePanel.getIndex(ClickedX, ClickedY));
 					}
 				}

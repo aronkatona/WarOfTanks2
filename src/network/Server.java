@@ -7,7 +7,6 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
-import java.util.Random;
 
 import logic.Field;
 import logic.ScoutTank;
@@ -121,17 +120,35 @@ public class Server {
                  while(tmp < N/2){
                 	 
                 	 String input = in.readLine();
-                	 Integer i = Integer.parseInt(input.substring(10,11));
-                	 Integer j = Integer.parseInt(input.substring(12,13));
-                	 table[i][j].setTank(new ScoutTank());
-                	 sendTable();
-                	 tmp++;
+                	 if(input.startsWith("CHAT")){
+                    	 for (PrintWriter writer : writers) {
+                             writer.println("MESSAGE " + name + ": " + input.substring(4));
+                         }
+                     }
+                	 else {
+                		 Integer i = Integer.parseInt(input.substring(10,11));
+                    	 Integer j = Integer.parseInt(input.substring(12,13));
+                    	 table[i][j].setTank(new ScoutTank());
+                    	 sendTable();
+                    	 tmp++;
+                	 }	
                  }
                  out.println("SETSTATE" + 1);
                  this.State = 1;
                  while(opponent.State != 1){
-                	 
-                	 System.out.println("");
+                	 String input = in.readLine();
+                	 if(input.startsWith("CHAT")){
+                    	 for (PrintWriter writer : writers) {
+                             writer.println("MESSAGE " + name + ": " + input.substring(4));
+                         }
+                     }
+                	 else{
+                		 try{
+                    		 Thread.sleep(100);
+                    	 }catch(Exception e){
+                    		 
+                    	 }   
+                	 }               	            	 
                  }
                  
                  
@@ -163,7 +180,7 @@ public class Server {
 	                    	 opponent.table[i][j].setTank(null);
 	                    	 opponent.numberOfTanks--;
 	                    	 
-	                    	 out.println("SHOOT"+i+j+2);
+	                    	 out.println("SHOOT"+i+j+0);
 	                     }else{
 	                    	 opponent.table[i][j].setTank(null);
 	                    	 opponent.table[i][j].setIsDestroyed(true);
