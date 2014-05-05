@@ -48,7 +48,6 @@ public class ClientPanel extends JPanel{
 
 		for(int i = 50; i < 350; i+= 30){
 			for(int j = 10; j < 310; j+=30 ){
-				System.out.println(Client.table[0][0]);
 				if( Client.table[((i-50)/30)][(j-10)/30] == 0){
 					g2d.drawImage(tank, i, j, this);
 				}
@@ -84,29 +83,23 @@ public class ClientPanel extends JPanel{
 
 	public String getIndex(int x, int y) {
 		String tmp = " ";
+		System.out.println(Client.State);
 		if(Client.State == 0){
-			if(x >= 50 && x < 350){
+			System.out.println("Player table");
+			if(x >= 50 && x < 350 && y >= 10 && y < 310){
 				//saját tábla
-				tmp = tmp + Integer.toString((x-50)/30) + ",";
-			} else tmp = tmp + Integer.toString(x-50) + ",";
+				tmp = tmp + Integer.toString((x-50)/30) + "," + Integer.toString((y-10)/30);
+			}
 		
-			if(y >= 10 && y < 310){
-				tmp = tmp + Integer.toString((y-10)/30);
-			} else tmp = tmp + Integer.toString(y-10);
-		}
-		
-		if(Client.State == 1){
-			if(x >= 450 && x < 750){
+		} 
+		else if(Client.State == 1){
+			System.out.println("Shooting table");
+			if(x >= 450 && x < 750 && y >= 10 && y < 310){
 				//saját tábla
-				tmp = tmp + Integer.toString((x-450)/30) + ",";
-			} else tmp = tmp + Integer.toString(x-450) + ",";
+				tmp = tmp + Integer.toString((x-450)/30) + "," + Integer.toString((y-10)/30);
+			}
 		
-			if(y >= 10 && y < 310){
-				tmp = tmp + Integer.toString((y-10)/30);
-			} else tmp = tmp + Integer.toString(y-10);
 		}
-		
-
 
 		System.out.println(tmp);
 		return tmp;

@@ -64,10 +64,16 @@ public class Client {
 				int ClickedY = e.getY();
 				
 				if(getState() == 0){
-					out.println("PLACETANK"+gui.tablePanel.getIndex(ClickedX, ClickedY));
+					if(!gui.tablePanel.getIndex(ClickedX, ClickedY).equals(" ")){
+						System.out.println("IM in mousepressed, State 0");
+						out.println("PLACETANK"+gui.tablePanel.getIndex(ClickedX, ClickedY));
+					}
 				}
 				else if(getState() == 1){
-					out.println("FIRE"+gui.tablePanel.getIndex(ClickedX, ClickedY));
+					if(!gui.tablePanel.getIndex(ClickedX, ClickedY).equals(" ")){
+						System.out.println("IM in mousepressed, State 1");
+						out.println("FIRE"+gui.tablePanel.getIndex(ClickedX, ClickedY));
+					}
 				}
 			}
 		});

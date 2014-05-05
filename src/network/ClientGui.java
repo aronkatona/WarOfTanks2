@@ -38,7 +38,6 @@ public class ClientGui extends JFrame{
 		textField.setEditable(false);
 		textField.setPreferredSize(new Dimension(800,30));
 		add(textField,BorderLayout.PAGE_END);
-		
        
 
        
