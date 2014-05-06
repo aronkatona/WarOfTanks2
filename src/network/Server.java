@@ -7,7 +7,6 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
-import java.util.Random;
 
 import logic.Field;
 import logic.ScoutTank;
@@ -30,7 +29,7 @@ public class Server {
     }
     
     private static HashSet<String> players = new HashSet<String>();
-    
+
     private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
 
     public static void main(String[] args) throws Exception {
@@ -64,7 +63,7 @@ public class Server {
     	private Field[][] table;
     	private int N;
 
-    	
+
     	public Player(Socket socket,int id){
     		this.socket = socket;
     		this.id = id;
@@ -76,24 +75,42 @@ public class Server {
     				//TODO: tankbrerakás
     			}
     		}
+    		
     		numberOfTanks = N/2;
     	}
     	 	
+    	/**
+    	 * 
+    	 * @param A játékoshoz tartozó ellenfél
+    	 */
     	public void setOpponent(Player opponent){
     		this.opponent = opponent;
     	}
     	
+
+    	/**
+    	 * A fõciklus
+    	 */
     	 public void run() {
              try {
+            	 /**
+            	  * Csatornák megnyitása
+            	  */
                  in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                  out = new PrintWriter(socket.getOutputStream(), true);
 
+                 /**
+                  * Login ablak fogadása
+                  */
                  while (true) {
                      out.println("SUBMITNAME");
                      name = in.readLine();
                      if (name == null) {
                          return;
                      }
+                     /**
+                      * Név elfogadása, ha eddig ilyen nevû játékos nem szerepelt
+                      */
                      synchronized (players) {
                          if (!players.contains(name)) {
                              players.add(name);
@@ -102,7 +119,7 @@ public class Server {
                      }
                  }
 
-         
+
                  out.println("NAMEACCEPTED");
                  writers.add(out);
                  out.println("SENDID" + id);
@@ -112,27 +129,52 @@ public class Server {
                  sendTable();
                  
                  
-                 /**
-                  * SETTTANKS
-                  */
                  out.println("SETTANKS"+ N/2);
                  int tmp = 0;
+                 /**
+                  * A tanklerakás ciklusa
+                  */
                  while(tmp < N/2){
                 	 
                 	 String input = in.readLine();
-                	 Integer i = Integer.parseInt(input.substring(10,11));
-                	 Integer j = Integer.parseInt(input.substring(12,13));
-                	 table[i][j].setTank(new ScoutTank());
-                	 sendTable();
-                	 tmp++;
+                	 if(input.startsWith("CHAT")){
+                    	 for (PrintWriter writer : writers) {
+                             writer.println("MESSAGE " + name + ": " + input.substring(4));
+                         }
+                     }
+                	 else {
+                		 Integer i = Integer.parseInt(input.substring(10,11));
+                    	 Integer j = Integer.parseInt(input.substring(12,13));
+                    	 table[i][j].setTank(new ScoutTank());
+                    	 sendTable();
+                    	 tmp++;
+                	 }	
                  }
                  out.println("SETSTATE" + 1);
                  this.State = 1;
-                 while(opponent.State == 0){
-                	 System.out.println("");
+                 
+                 /*
+                  * Várunk amíg a másik játékos nem rakta le a tankokat
+                  */
+                 while(opponent.State != 1){
+                	 String input = in.readLine();
+                	 if(input.startsWith("CHAT")){
+                    	 for (PrintWriter writer : writers) {
+                             writer.println("MESSAGE " + name + ": " + input.substring(4));
+                         }
+                     }
+                	 else{
+                		 try{
+                    		 Thread.sleep(100);
+                    	 }catch(Exception e){
+                    		 
+                    	 }   
+                	 }               	            	 
                  }
                  
-                 
+                 /**
+                  * A játékciklus 
+                  */
                  while (true) {
                 	 
                 	 if(numberOfTanks == 0){
@@ -160,9 +202,13 @@ public class Server {
 	                     if(opponent.table[i][j].getTank() != null){
 	                    	 opponent.table[i][j].setTank(null);
 	                    	 opponent.numberOfTanks--;
+	                    	 
+	                    	 out.println("SHOOT"+i+j+0);
 	                     }else{
 	                    	 opponent.table[i][j].setTank(null);
 	                    	 opponent.table[i][j].setIsDestroyed(true);
+	                    	 
+	                    	 out.println("SHOOT"+i+j+2);
 	                     }
 	                     Server.currentPlayer =  opponent.id;
 	                     opponent.sendTable();
@@ -188,7 +234,9 @@ public class Server {
              }
          }
     	 
-    	 
+    	 /**
+    	  * Átküldjük a kliensnek a táblákon való modositást
+    	  */
     	 public void sendTable(){
     		 for(int i = 0; i < N; ++i){
             	 for(int j = 0; j < N; ++j){

@@ -1,15 +1,15 @@
 package network;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
 
@@ -21,13 +21,13 @@ public class Client {
     PrintWriter out;
     ClientGui gui ;
     
-    int State = 0;//tanklerakós state 0 , 1 amikor nincs lerakas
+    static int State = 0;//tanklerakós state 0 , 1 amikor nincs lerakas
     
-    Integer[][] table ;
+    static Integer[][] table;
+    static Integer[][] shootTable;
+    
     Integer N;
-    
     String name;
-    
     
     public Client() {
     	
@@ -38,23 +38,49 @@ public class Client {
                 out.println("CHAT" + gui.textField.getText());
                 gui.textField.setText("");
             }
-        });
-
-        for(final JButton btn: gui.buttons){
-        	btn.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-
-						if(getState() == 0){
-							out.println("PLACETANK" + btn.getText());
-
-						}else if(getState() == 1){
-							out.println("FIRE" + btn.getText());
-						}
-				}
-			});
+        });   
+        N = 10;
+        table = new Integer[N][N];
+        for(int i = 0 ; i < 10; ++i){
+        	for(int j = 0; j < 10; ++j){
+        		table[i][j] = 1;
+        	}
         }
+        
+        shootTable = new Integer[N][N];
+        for(int i = 0 ; i < 10; ++i){
+        	for(int j = 0; j < 10; ++j){
+        		shootTable[i][j] = 1;
+        	}
+        }
+        
+        gui.tablePanel.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mousePressed(MouseEvent e){
+				int ClickedX = e.getX();
+				int ClickedY = e.getY();
+				
+				
+				if(getState() == 0){
+					String tmp = gui.tablePanel.getIndex(ClickedX, ClickedY);
+					Integer i = Integer.parseInt(tmp.substring(1,2));
+					Integer j = Integer.parseInt(tmp.substring(3,4));
+					if(!gui.tablePanel.getIndex(ClickedX, ClickedY).equals(" ") && table[i][j] != 0){
+						out.println("PLACETANK"+gui.tablePanel.getIndex(ClickedX, ClickedY));
+					}
+				}
+				else if(getState() == 1){
+					if(!gui.tablePanel.getIndex(ClickedX, ClickedY).equals(" ")){
+						out.println("FIRE"+gui.tablePanel.getIndex(ClickedX, ClickedY));
+					}
+				}
+			}
+		});
+    }
+    
+    public Integer getElementInFiled(int x, int y){
+    	return table[x][y];
     }
     
     public int getState(){
@@ -73,7 +99,9 @@ public class Client {
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
         
-
+        /**
+         * A kliens fõciklusa, fogadjuk a servertõl az üzeneteket és feldolgozzuk
+         */
         while (true) {
             String line = in.readLine();
              if(line.startsWith("SENDID")){
@@ -97,20 +125,14 @@ public class Client {
             } else if(line.startsWith("SETSTATE")){
             	int s = Integer.parseInt(line.substring(8));
             	setState(s);    	
+            }else if(line.startsWith("SHOOT")){
+            	Integer i = Integer.parseInt(line.substring(5,6));
+            	Integer j = Integer.parseInt(line.substring(6,7));
+            	Integer value = Integer.parseInt(line.substring(7,8));
+            	shootTable[i][j] = value;
+            	
             } else if(line.equals("TABLEDONE")){
-            	 for(int i = 0; i < N; ++i){
-                 	for(int j = 0; j < N; ++j){
-                 		if(table[i][j] == 0){
-                 			setBtnColor(i,j,Color.BLUE);
-                 		} 
-                 		if(table[i][j] == 1){
-                 			setBtnColor(i,j,Color.WHITE);
-                 		}
-                 		if(table[i][j] == 2){
-                 			setBtnColor(i,j,Color.RED);
-                 		} 
-                 	}
-                 }
+            	 gui.repaint();
             } else if (line.startsWith("MESSAGE")) {
                 gui.messageArea.append(line.substring(8) + "\n");
             } else if(line.equals("WON")){
@@ -128,23 +150,10 @@ public class Client {
         
     }
     
-    public void setBtnColor(int i,int j, Color color){
-    	String tmp = " " + Integer.toString(i) + "," + Integer.toString(j); 
-			for(JButton btn: gui.buttons){
-				if(btn.getText().equals(tmp)){
-					btn.setBackground(color);
-					break;
-				} 
-			}
-    }
-    
-
-
-    
     public static void main(String[] args) throws Exception {
         Client client = new Client();
         client.gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         client.gui.setVisible(true);
-        client.run();
+        client.run();     
     }
 }

@@ -1,14 +1,10 @@
 package network;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Dimension;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -16,53 +12,42 @@ import javax.swing.JTextField;
 
 public class ClientGui extends JFrame{
 
-	private JPanel panel1;
-	private JPanel panel2;
 
-	public List<JButton> buttons;
-
+	public ClientPanel tablePanel;
 	public JTextField textField;
-
 	public JTextArea messageArea;
 
 	public ClientGui(){
 		setTitle("UberGame");
-		setSize(800, 600);
-
+		setSize(800, 700);
+		setResizable(true);
+		
 		setLayout(new BorderLayout());
-
-		panel1 = new JPanel();
-		panel1.setLayout(new GridLayout(10,10));
-
-		buttons = new ArrayList<>();
-		for(int i = 0; i < 10; ++i){
-			for(int j = 0; j < 10; ++j){
-				JButton btn = new JButton();
-				btn.setText(" " + Integer.toString(i) + ","+ Integer.toString(j));
-				buttons.add(btn);
-				panel1.add(btn);
-			}
-		}
-
-		add(panel1,BorderLayout.PAGE_START);
-
-		panel2 = new JPanel();
+		/**
+		 * Rajz panel hozzáadása
+		 */
+		tablePanel = new ClientPanel();
+		tablePanel.setPreferredSize(new Dimension(800,330));
+		add(tablePanel,BorderLayout.PAGE_START);
+		
+		/**
+		 * Chat hozzáadás
+		 */
+		messageArea = new JTextArea(8, 40);
+	    messageArea.setEditable(false);
+	    messageArea.setPreferredSize(new Dimension(800,300));
+	    add(messageArea,BorderLayout.CENTER);
 
 		textField = new JTextField(40);
 		textField.setEditable(false);
-	    messageArea = new JTextArea(8, 40);
-	    messageArea.setEditable(false);
-
-
-        panel2.setLayout(new BorderLayout());
-        panel2.add(textField,BorderLayout.PAGE_START);
-        panel2.add(messageArea,BorderLayout.PAGE_END);
+		textField.setPreferredSize(new Dimension(800,30));
+		add(textField,BorderLayout.PAGE_END);
        
-        add(panel2,BorderLayout.PAGE_END);
+
        
-        add(new JScrollPane(messageArea));
+		add(new JScrollPane(messageArea));
         setLocationRelativeTo(null);
-      //  pack();
+
           
         
 	}
