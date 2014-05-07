@@ -6,4 +6,4 @@ majus 16
 ###feladat
 lan-ban játszható "torpedó" játék
 ###csinálta
-master, master, master
+master, master
